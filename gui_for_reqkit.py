@@ -29,13 +29,23 @@ class PyQtApp(QtWidgets.QWidget):
     def createFormGroupBox(self):
         self.formGroupBox = QGroupBox("Details of the Application: (Ref: Google Play)")
         layout = QFormLayout()
-        layout.addRow(QLabel("App Name:"), QLineEdit())
-        layout.addRow(QLabel("App ID:"), QLineEdit())
-        layout.addRow(QLabel("Github URL:"), QLineEdit())
+        self.name = QLineEdit()
+        self.id = QLineEdit()
+        self.git_url = QLineEdit()
+        layout.addRow(QLabel("App Name:"), self.name)
+        layout.addRow(QLabel("App ID:"), self.id)
+        layout.addRow(QLabel("Github URL:"), self.git_url)
         self.formGroupBox.setLayout(layout)
 
     def clickMethod(self):
         print('Clicked Pyqt button.')
+        name = self.name.text()
+        id1 = self.id.text()
+        url = self.git_url.text()
+
+        print("App Name: ", name)
+        print("App ID: ", id1)
+        print("Github URL: ", url)
 
 if __name__ == "__main__":
     import sys
