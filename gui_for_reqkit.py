@@ -3,6 +3,13 @@ from PyQt5.QtWidgets import *
 from PIL import ImageTk, Image
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import *
+import os
+import tool_name
+
+
+Name = ""
+ID1 = ""
+URL = ""
 
 class PyQtApp(QtWidgets.QWidget):
    
@@ -24,6 +31,9 @@ class PyQtApp(QtWidgets.QWidget):
         mainLayout.addWidget(self.label, 0, Qt.AlignHCenter)
         mainLayout.addWidget(self.formGroupBox, 1, Qt.AlignTop)
         mainLayout.addWidget(self.buttonOK,2,Qt.AlignTop)
+        # self.Name = ""
+        # self.ID1 = ""
+        # self.URL = ""
         self.setLayout(mainLayout)
 
     def createFormGroupBox(self):
@@ -39,16 +49,24 @@ class PyQtApp(QtWidgets.QWidget):
 
     def clickMethod(self):
         print('Clicked Pyqt button.')
-        name = self.name.text()
-        id1 = self.id.text()
-        url = self.git_url.text()
+        global Name, ID1, URL 
+        Name = self.name.text()
+        ID1 = self.id.text()
+        URL = self.git_url.text()
+        self.print_details()
 
-        print("App Name: ", name)
-        print("App ID: ", id1)
-        print("Github URL: ", url)
+    def print_details(self):
+
+        print("App Name: ", Name)
+        print("App ID: ", ID1)
+        print("Github URL: ", URL)
+
+        import vlc_scraper_1
+        vlc_scraper_1.scrape_all_reviews(Name, ID1, URL)
 
 if __name__ == "__main__":
     import sys
+    # os.system("tool_name.py")
     app = QtWidgets.QApplication(sys.argv)
     myapp = PyQtApp()
     myapp.show()
