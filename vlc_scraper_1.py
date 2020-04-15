@@ -3,16 +3,14 @@ from time import sleep
 from bs4 import BeautifulSoup, Comment
 import pandas as pd
 import csv
-# from gui_for_reqkit import Name, ID1, URL
+
 def scrape_all_reviews(Name, ID1, URL):
-	# global Name, ID1, URL
 	print(Name, ID1, URL)
 	l1 = "https://play.google.com/store/apps/details?id="
 	id_1 = l1+ID1
 	link = id_1+"&hl=en&showAllReviews=true"
 	print("Final URL: ", link)
 
-	# driver = webdriver.Chrome(executable_path='/Downloads/chromedriver_linux64/chromedriver')
 	driver = webdriver.Firefox()
 	driver.get(link)
 
@@ -53,30 +51,6 @@ def scrape_all_reviews(Name, ID1, URL):
 	rating = []
 	date = []
 	count = 1
-
-	# print(n)
-	# big_tags = driver.find_elements_by_xpath('//div[@class="d15Mdf bAhLNe"]')
-	# for tag in big_tags:
-	# 	name = tag.find_element_by_xpath('//span[@class="X43Kjb"]').text
-	# 	Name.append(name)
-
-	# 	rev = tag.find_element_by_xpath('//div[@class="UD7Dzf"]/span').text.replace('"','')
-	# 	rev = rev.replace("'",'')
-	# 	Review.append(rev)
-
-	# 	d = tag.find_element_by_xpath('//span[@class="p2TkOb"]').text
-	# 	date.append(d)
-
-	# 	stars = tag.find_element_by_xpath('//div[@class="pf5lIe"]/div').get_attribute('aria-label')
-	# 	rating.append(stars)
-
-	# 	thumps_up = tag.find_element_by_xpath('//div[@class="jUL89d y92BAb"]')
-	# 	t = thumps_up.text
-	# 	upvotes.append(t)
-
-	# 	print(count," field done!!!")
-	# 	# print(name)
-	# 	count+=1
 
 	people = driver.find_elements_by_xpath('//span[@class="X43Kjb"]')
 	for person in people:
@@ -122,14 +96,6 @@ def scrape_all_reviews(Name, ID1, URL):
 	with open("test1.csv", "w") as f:
 	    writer = csv.writer(f)
 	    writer.writerows(a)
-
-	# with open('vlc_reviews.csv', 'w', newline='') as myfile:
-	#     wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-	#     wr.writerow(Name)
-	#     wr.writerow(Review)
-	#     wr.writerow(upvotes)
-	#     wr.writerow(rating)
-	#     wr.writerow(date)
 
 	print(Name)
 	print(Review)
