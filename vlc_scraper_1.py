@@ -90,7 +90,7 @@ def scrape_all_reviews(Name, ID1, URL):
 	a.append(date)
 	print(len(a[0]))
 
-	with open("test1.csv", "w") as f:
+	with open("test1.csv", "w", encoding = 'utf-8') as f:
 	    writer = csv.writer(f)
 	    writer.writerows(a)
 
