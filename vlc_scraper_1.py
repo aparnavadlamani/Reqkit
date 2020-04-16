@@ -28,9 +28,7 @@ def scrape_all_reviews(Name, ID1, URL):
 		sleep(1)
 		lenOfPage = driver.execute_script("window.scrollTo(0, document.body.scrollHeight);var lenOfPage=document.body.scrollHeight;return lenOfPage;")
 		if lastCount==lenOfPage:
-			# print("Here1")
 			try:
-				# print("here2")
 				n = 20
 				driver.find_element_by_xpath("//span[@class='RveJvd snByac']").click()
 				while(n>0):
@@ -40,10 +38,9 @@ def scrape_all_reviews(Name, ID1, URL):
 					lenOfPage = driver.execute_script("window.scrollTo(0, document.body.scrollHeight);var lenOfPage=document.body.scrollHeight;return lenOfPage;")
 					if(lenOfPage==lastCount):
 						driver.find_element_by_xpath("//span[@class='RveJvd snByac']").click()
-			except NameError: #NoSuchElementException
+			except NameError: 
 				print("here3")
 			else:
-				# print("here4")
 				match=True
 	Name = []
 	Review = []
@@ -56,7 +53,6 @@ def scrape_all_reviews(Name, ID1, URL):
 	for person in people:
 		name = person.text
 		Name.append(name)
-		# print(name)
 		count+=1
 	print(count)
 
@@ -66,7 +62,7 @@ def scrape_all_reviews(Name, ID1, URL):
 		if(count==244):
 			count+=1
 		else:
-			print(count)
+			# print(count)
 			count+=1
 			rev = review.text
 			Review.append(rev)
@@ -92,15 +88,16 @@ def scrape_all_reviews(Name, ID1, URL):
 	a.append(upvotes)
 	a.append(rating)
 	a.append(date)
+	print(len(a[0]))
 
 	with open("test1.csv", "w") as f:
 	    writer = csv.writer(f)
 	    writer.writerows(a)
 
-	print(Name)
-	print(Review)
-	print(upvotes)
-	print(rating)
-	print(date)
+	# print(Name)
+	# print(Review)
+	# print(upvotes)
+	# print(rating)
+	# print(date)
 
-scrape_all_reviews("VLC", "org.videolan.vlc", "-")
+# scrape_all_reviews("VLC", "org.videolan.vlc", "-")
