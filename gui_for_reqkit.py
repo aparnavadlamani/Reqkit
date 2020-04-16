@@ -13,6 +13,7 @@ import vlc_scraper_1
 import data_processing
 import Supervised_model
 import push_in_git
+import SRS
 
 Name = ""
 ID1 = ""
@@ -45,6 +46,7 @@ class TaskThreadPushGit(QtCore.QThread):
     def run(self):
         # time.sleep(2)
         push_in_git.post_issue_git()
+        SRS.srs_generation()
         self.taskFinished.emit()
 
 class Window3(QMainWindow):            
