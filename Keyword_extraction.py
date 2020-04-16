@@ -172,6 +172,6 @@ def keyword_extraction():
             keywords = rake.run(text)
             #print(keywords)    
     return top_keywords
-list_produced = keyword_extraction()
-print(list_produced)
+#list_produced = keyword_extraction()
+#print(list_produced)
 
