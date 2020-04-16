@@ -12,6 +12,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QToolTip, QM
 import vlc_scraper_1
 import data_processing
 import Supervised_model
+import push_in_git
 
 Name = ""
 ID1 = ""
@@ -35,9 +36,54 @@ class TaskThreadProcessData(QtCore.QThread):
 class TaskThreadTrainAndPredict(QtCore.QThread):
     taskFinished = QtCore.pyqtSignal()
     def run(self):
-        time.sleep(10)
+        time.sleep(5)
         Supervised_model.classification_model()
         self.taskFinished.emit()
+
+class TaskThreadPushGit(QtCore.QThread):
+    taskFinished = QtCore.pyqtSignal()
+    def run(self):
+        # time.sleep(2)
+        push_in_git.post_issue_git()
+        self.taskFinished.emit()
+
+class Window3(QMainWindow):            
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Progress Backend")
+        self.setGeometry(100, 50, 700, 500)
+        self.setStyleSheet("background-color: white;")
+
+        self.label1 = QLabel(self)
+        self.label1.setPixmap(QPixmap('reqkit_logo.png.svg'))
+        self.label1.setGeometry(250,15, 200, 200)
+
+        self.label2 = QLabel("Generates Requirements and pushes automatically in git",self)
+        self.label2.setGeometry(180,250, 400, 20)
+
+        self.progressBar = QProgressBar(self)
+        self.progressBar.setGeometry(130, 250+35, 450, 20)
+        self.progressBar.setRange(0,1)
+        self.myTask = TaskThreadPushGit()
+        self.onStart()
+
+        self.buttonOK = QtWidgets.QPushButton("STOP PROCESS", self)
+        self.buttonOK.resize(100,32)
+        self.buttonOK.clicked.connect(self.clickMethod1)
+        self.buttonOK.move(275,350)
+
+    def onStart(self): 
+        self.progressBar.setRange(0,0)
+        self.myTask.start()
+        self.myTask.taskFinished.connect(self.onFinished)
+
+    def onFinished(self):
+        self.progressBar.setRange(0,1)
+
+    def clickMethod1(self):
+        print('Clicked Pyqt button. This force stops the process')
+        self.hide()
+        exit(0)
 
 class Window2(QMainWindow):            
     def __init__(self):
@@ -92,7 +138,7 @@ class Window2(QMainWindow):
         
 
         self.label10 = QLabel(self)
-        self.label10.setGeometry(237,self.y+70,400, 20)
+        self.label10.setGeometry(217,self.y+70,400, 20)
 
         self.buttonOK = QtWidgets.QPushButton("Generate Requirements", self)
         self.buttonOK.resize(400,32)
@@ -116,14 +162,11 @@ class Window2(QMainWindow):
         self.myTask2.start()
         self.myTask2.taskFinished.connect(self.onFinished2)
 
-    def new_window(self):
-        self.w = Window3()
-        self.w.show()
-
     def clickMethod1(self):
         print('Clicked Pyqt button.')
         self.hide()
-        self.new_window()
+        self.w = Window3()
+        self.w.show()
 
     def onFinished(self):
         self.progressBar.setRange(0,1)
