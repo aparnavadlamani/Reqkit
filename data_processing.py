@@ -4,7 +4,7 @@ import pandas as pd
 import seaborn as sns
 
 def process_data():
-    with open('test1.csv','r') as dest_f:
+    with open('test1.csv','r', encoding='utf-8') as dest_f:
         data_iter = csv.reader(dest_f,
                                delimiter = ",")
         data = [data for data in data_iter]
@@ -43,7 +43,7 @@ def process_data():
     print(ds)
     print(len(ds),len(ds[0]))
 
-    with open("processed1.csv", "w") as f:
+    with open("processed1.csv", "w", encoding='utf-8') as f:
         writer = csv.writer(f)
         writer.writerows(ds)
 
