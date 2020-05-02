@@ -57,15 +57,23 @@ def scrape_all_reviews(Name, ID1, URL):
 	print(count)
 
 	count = 1
-	reviews = driver.find_elements_by_xpath('//span[@jsname="bN97Pc"]')
-	for review in reviews:
-		if(count==244):
-			count+=1
-		else:
-			# print(count)
-			count+=1
-			rev = review.text
-			Review.append(rev)
+	
+	reviews_full = driver.find_elements_by_xpath('//div[@jscontroller="LVJlx"]/span[@jsname="fbQN7e"]')
+	reviews_half = driver.find_elements_by_xpath('//span[@jsname="bN97Pc"]')
+	print(len(reviews_half), len(reviews_full))
+
+	for i in range(len(reviews_full)):
+		print(i)
+		print(reviews_full[i].get_attribute('innerText'))
+		print(reviews_half[i].text)
+		try:
+			if reviews_full[i].get_attribute('innerText') == "":
+				Review.append(reviews_half[i].text)
+			else:
+				Review.append(reviews_full[i].get_attribute('innerText'))
+		except:
+			Review.append("")
+			continue
 
 	dates = driver.find_elements_by_xpath('//span[@class="p2TkOb"]')
 	for d in dates:
@@ -93,11 +101,5 @@ def scrape_all_reviews(Name, ID1, URL):
 	with open("test1.csv", "w", encoding = 'utf-8') as f:
 	    writer = csv.writer(f)
 	    writer.writerows(a)
-
-	# print(Name)
-	# print(Review)
-	# print(upvotes)
-	# print(rating)
-	# print(date)
 
 # scrape_all_reviews("VLC", "org.videolan.vlc", "-")
