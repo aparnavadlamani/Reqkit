@@ -38,7 +38,7 @@ def process_data():
                 temp.append(data_array[i][j])
             except:
                 continue
-    ds.append(temp)
+        ds.append(temp)
 
     print(ds)
     print(len(ds),len(ds[0]))
