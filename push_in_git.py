@@ -12,6 +12,7 @@ import pandas as pd
 import csv
 import Supervised_model
 import Keyword_extraction
+import Text_Summarization
 def post_issue_git():
     Supervised_model.classification_model()
     dataset = pd.read_csv("dataset_output.csv")
@@ -59,5 +60,4 @@ def post_issue_git():
             driver.close()
     driver.quit()
 
-post_issue_git() 
 
