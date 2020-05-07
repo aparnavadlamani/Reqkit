@@ -13,7 +13,9 @@ import vlc_scraper_1
 import data_processing
 import Supervised_model
 import push_in_git
-import SRS
+import python_to_mysql
+import dbtocsv
+#import SRS
 
 Name = ""
 ID1 = ""
@@ -22,10 +24,10 @@ URL = ""
 class TaskThreadCollectData(QtCore.QThread):
     taskFinished = QtCore.pyqtSignal()
     def run(self):
-        # time.sleep(3)
+        time.sleep(5)
         print("In thread: ", Name,ID1, URL)
-        vlc_scraper_1.scrape_all_reviews(Name, ID1, URL)
-        self.taskFinished.emit() 
+        dbtocsv.export(Name+'db',Name, ID1, URL)
+        self.taskFinished.emit()
 
 class TaskThreadProcessData(QtCore.QThread):
     taskFinished = QtCore.pyqtSignal()
@@ -196,7 +198,7 @@ class PyQtApp(QtWidgets.QWidget):
         self.label.setGeometry(250,50, 200, 200)
         self.setStyleSheet("background-color: white;")
         self.createFormGroupBox()
-        self.buttonOK = QtWidgets.QPushButton("NEXT", self)
+        self.buttonOK = QtWidgets.QPushButton("Check database and get reviews", self)
         self.buttonOK.resize(100,32)
         self.buttonOK.clicked.connect(self.clickMethod)
         # layout.addWidget(self.buttonOK, 1, 1)
